@@ -1,15 +1,20 @@
-import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '../../redux/contactReducer';
 import css from "./Filter.module.css";
 
-const Filter = ({ value, onChange }) => (
-  <input
-    className={css.filterinput}
-    type="text"
-    name="filter"
-    value={value}
-    onChange={onChange}
-    placeholder="Пошук"
-  />
-);
+
+const Filter = () => {
+  const filter = useSelector(state => state.contacts.filter);
+  const dispatch = useDispatch();
+
+  const filterChange = e => {
+    const { value } = e.target;
+    dispatch(setFilter(value));
+  };
+
+  return (
+      <input className={css.filterinput} onChange={filterChange} value={filter} type="text" name="filter" placeholder="Пошук" />
+  );
+};
 
 export default Filter;
